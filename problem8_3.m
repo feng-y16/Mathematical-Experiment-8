@@ -1,0 +1,21 @@
+%%
+clear
+lambda=1/1000;
+num=100;
+T=[500,800,1000,1200,1500];
+times=1000;
+num_T=length(T);
+value1=zeros(times,num_T);
+value2=zeros(times,num_T);
+value3=estimate3(times,num,lambda);
+for i=1:1:num_T
+    value1(:,i)=estimate1(times,num,lambda,T(i));
+    value2(:,i)=estimate2(times,num,lambda,T(i));
+    plot_est(value1(:,i),value2(:,i),value3,T(i),lambda);
+end
+value1_mean=mean(value1);
+value1_std=std(value1);
+value2_mean=mean(value2);
+value2_std=std(value2);
+value3_mean=mean(value3);
+value3_std=std(value3);
