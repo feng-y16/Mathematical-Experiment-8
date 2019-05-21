@@ -24,8 +24,10 @@ j_f_mu=data(:,8);
 j_f_sigma=data(:,9);
 %%
 num_of_age=12;
-n1=round(200000/num_of_age/2);
-n2=round(200000/num_of_age/2);
+%n1=round(200000/num_of_age/2);
+%n2=round(200000/num_of_age/2);
+n1=5000;
+n2=5000;
 test_sigma_m=zeros(num_of_age,1);
 test_sigma_f=zeros(num_of_age,1);
 for i=1:1:num_of_age
@@ -46,17 +48,16 @@ for i=1:1:num_of_age
 end
 test_p1_mu_m=zeros(num_of_age,1);
 test_p1_mu_f=zeros(num_of_age,1);
-test_t_mu_m=abs(c_m_mu-j_m_mu)./(c_m_sigma.^2/n1+j_m_sigma.^2/n2);
-test_t_mu_f=abs(c_f_mu-j_f_mu)./(c_f_sigma.^2/n1+j_f_sigma.^2/n2);
+test_t_mu_m=abs(c_m_mu-j_m_mu)./sqrt((c_m_sigma.^2/n1+j_m_sigma.^2/n2));
+test_t_mu_f=abs(c_f_mu-j_f_mu)./sqrt((c_f_sigma.^2/n1+j_f_sigma.^2/n2));
 for i=1:1:num_of_age
     test_p1_mu_m(i)=2*(1-tcdf(test_t_mu_m(i),n1+n2-2));
     test_p1_mu_f(i)=2*(1-tcdf(test_t_mu_f(i),n1+n2-2));
 end
-
 test_p2_mu_m=zeros(num_of_age,1);
 test_p2_mu_f=zeros(num_of_age,1);
-test_z_mu_m=abs(c_m_mu-j_m_mu)./(c_m_sigma.^2/n1+j_m_sigma.^2/n2);
-test_z_mu_f=abs(c_f_mu-j_f_mu)./(c_f_sigma.^2/n1+j_f_sigma.^2/n2);
+test_z_mu_m=abs(c_m_mu-j_m_mu)./sqrt((c_m_sigma.^2/n1+j_m_sigma.^2/n2));
+test_z_mu_f=abs(c_f_mu-j_f_mu)./sqrt((c_f_sigma.^2/n1+j_f_sigma.^2/n2));
 for i=1:1:num_of_age
     test_p2_mu_m(i)=2*(1-normcdf(test_z_mu_m(i)));
     test_p2_mu_f(i)=2*(1-normcdf(test_z_mu_f(i)));
